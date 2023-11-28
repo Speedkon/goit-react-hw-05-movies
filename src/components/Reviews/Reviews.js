@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getReviews } from "helpers/api";
 
-export const Reviews = () => {
+export default function Reviews() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [reviews, setReviews] = useState([]);

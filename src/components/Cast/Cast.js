@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { getCast } from "helpers/api";
 
 
-export const Cast = () => {
+export default function Cast() {
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -39,9 +39,10 @@ export const Cast = () => {
                         const { profile_path, name, character } = actor;
                         const BASE_URL = "https://image.tmdb.org/t/p/w200";
                         const photo = BASE_URL + profile_path;
+                        const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700'
                         return (
                             <li key={name}>
-                                {profile_path && (<img src={photo} alt={name} />)}
+                                {profile_path && (<img src={profile_path ? photo : defaultImg} width={250} alt={name} />)}
                                 <div>
                                 <p>{name}</p>
                                     <h1>Character: {character}</h1>

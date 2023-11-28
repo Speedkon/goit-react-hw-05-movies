@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useLocation, useSearchParams, Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { fetchMovies } from "helpers/api";
-
+import { MoviesList } from "components/MoviesList/MoviesList";
 
 export default function MoviesPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -35,9 +35,6 @@ export default function MoviesPage() {
 
     }, [searchedMovie])
     
-    const location = useLocation();
-
-    
     const onSearch = (e) => {
         e.preventDefault()
         
@@ -46,7 +43,6 @@ export default function MoviesPage() {
         setParams({movie: value})
         }
     } 
-    
     return (
         <>
             <form onSubmit={onSearch}>
@@ -57,33 +53,11 @@ export default function MoviesPage() {
                 <button>Search</button>
             </form>
 
-            {error && <p>Oops, something went wrong.</p>}
-            {isLoading && <p>Loading...</p>}
-            {movies.length > 0 && !isLoading && (
-            <ul>
-                {movies.length > 0 && (
-                    movies.map(
-                        (movie, index) => {
-                            const { id, original_title, poster_path
-                            } = movie;
-                            const BASE_URL = "https://image.tmdb.org/t/p/w200";
-                        const photo = BASE_URL + poster_path;
-
-                            return (
-                                
-                                <li key={index}>
-                                    <Link to={`${id}`} state={{from: location}}>
-                                    {poster_path && (<img src={photo} alt={original_title} />)}
-                                    <h1>{original_title}</h1>
-                                        </Link>
-                                </li>
-                            )
-                        }
-                    )
-                )}
-                    </ul>
-            )}
-
-            {movies.length === 0 && !isLoading && searchedMovie &&<p>Movie "{searchedMovie}" not found.</p>}
-            </>
-    )}
+            <div>
+                {error && <p>Oops, something went wrong.</p>}
+                {isLoading && <p>Loading...</p>}
+                {movies.length > 0 && !isLoading && <MoviesList movies={movies}/>}
+                {movies.length === 0 && !isLoading && searchedMovie &&<p>Movie "{searchedMovie}" not found.</p>}
+            </div>
+        </>
+)}

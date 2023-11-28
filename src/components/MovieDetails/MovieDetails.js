@@ -1,31 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
-import { getMovieDetails } from "helpers/api";
 import { Container } from "./MovieDetails.styled";
 
-export const MovieDetails = () => {
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [movie, setMovie] = useState(null);
-
-    const { movieId } = useParams();
-
-    useEffect(() => {
-        const getDetails = async () => {
-            setIsLoading(true)
-            try {
-                const response = await getMovieDetails(movieId)
-                setMovie({ ...response })
-            } catch (error) {
-                setError(error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        getDetails()
-    }, [movieId]);
-    
+export const MovieDetails = ({movie, error, isLoading}) => {
     const getAverage = () => {
         const { vote_average } = movie;
         return Math.round(vote_average * 10);
@@ -36,16 +11,16 @@ export const MovieDetails = () => {
         const BASE_URL = "https://image.tmdb.org/t/p/w200";
         return BASE_URL+poster_path;
     }
-
+    const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700'
     return (
-        <>
-            {error && <p>Oops, something went wrong.</p>}
+    <>
+        {error && <p>Oops, something went wrong.</p>}
             {isLoading && <p>Loading...</p>}
 
 
             {movie && (
                 <Container>
-                <img src={ImgURL()} alt={movie.title}></img>
+                    <img src={movie.poster_path ? ImgURL() : defaultImg} width={250} alt={movie.title}></img>
                 <div>
                     <h1>{movie.title}</h1>
                         <p>User score: {getAverage()}%</p>
@@ -55,7 +30,7 @@ export const MovieDetails = () => {
                     {movie.genres.map(({name}, index) => <span key={index}>{name} </span>)}
                 </div>
                     </Container>
-
-            )}</>
+            )}
+    </>
     )
 }
