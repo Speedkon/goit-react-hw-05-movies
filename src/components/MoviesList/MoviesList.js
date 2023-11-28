@@ -15,8 +15,8 @@ export const MoviesList = ({movies}) => {
 
                             return (
                                 <li key={index}>
-                                    <Link to={`movies/${id}`} state={{from: location}}>
-                                    {poster_path && (<img src={poster_path ? photo : defaultImg} width={250} alt={original_title} />)}
+                                    <Link to={`/movies/${id}`} state={{from: location}}>
+                                    <img src={poster_path ? photo : defaultImg} width={250} alt={original_title} />
                                     <h1>{original_title}</h1>
                                     </Link>
                                 </li>)
