@@ -42,7 +42,7 @@ export default function Cast() {
                         const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700'
                         return (
                             <li key={name}>
-                                {profile_path && (<img src={profile_path ? photo : defaultImg} width={250} alt={name} />)}
+                                <img src={profile_path ? photo : defaultImg} width={250} alt={name} />
                                 <div>
                                 <p>{name}</p>
                                     <h1>Character: {character}</h1>
